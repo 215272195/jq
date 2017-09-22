@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Hello, World</title>
+		<style type="text/css">
+		table{
+			border-collapse: collapse;
+			border-spacing: 0;
+			width:100%
+		}
+		/*thead{
+			background-color: #f2c6a3
+		}
+		tr:nth-child(even){
+			background-color: #cccccc
+		}*/
+		/*tr:hover{
+			background-color: #d2a3f1
+		}*/
+		th,td{
+			text-align: center;
+			border:1px solid #999999
+		}
+		.pagging{
+
+			margin-top:10px;
+
+			float:right;
+
+		}
+
+		.pagination{
+
+			display: inline-block;
+
+			padding-left: 0;
+
+			margin: 20px 0;
+
+			border-radius: 5px;
+
+			behavior: url(js/PIE.htc);
+
+		}
+
+		.pagination>li{
+
+			float: left;
+
+			list-style: none;
+
+		}
+
+		.pagination>li>a, .pagination>li>span{
+
+			position: relative;
+
+			float: left;
+
+			padding: 6px 12px;
+
+			margin-left: -1px;
+
+			line-height: 1.42857143;
+
+			color:  #666;
+
+			border: 1px solid #ddd;
+
+		}
+
+		.pagination>li>a:hover, .pagination>li>span:hover{
+
+			color: #5093e1;
+
+			background-color: #f1f1f1;
+
+		}
+
+		.pagination>li:first-child>a, .pagination>li:first-child>span{
+
+			margin-left: 0;
+
+			border-top-left-radius: 4px;
+
+			border-bottom-left-radius: 4px;
+
+			behavior: url(js/PIE.htc);
+
+		}
+
+		.pagination>li:last-child>a, .pagination>li:last-child>span{
+
+			border-top-right-radius:4px;
+
+			border-bottom-right-radius:4px;
+
+			behavior: url(js/PIE.htc);
+
+		}
+
+		.pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, .pagination>.active>span:hover, .pagination>.active>a:focus, .pagination>.active>span:focus{
+
+			z-index: 2;
+
+			color: #fff;
+
+			cursor: default;
+
+			background-color: #5093e1;
+
+		}
+		</style>
+	</head>
+	<body>
+	<div id="tableBox" class="tableBox">
+		<table border="0" cellspacing="0" cellpadding="0">
+		</table>
+		<div class="pagging">
+			<ul class="pagination pag-loca">
+			</ul> 
+		</div>
+	</div>
+	<textarea id="table_tpl" style="display:none"></textarea>
+	<textarea id="table_tpl1" style="display:none"></textarea>
+	<script type="text/javascript" src="jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="table.js"></script>
+	<script>
+		var test_json_str='{"data":[{"connective_pg_id":"接入电网","voltage_type":"电压等级","id":"设备ID","model":"型号","sort_names":["id","name","st_id","voltage_type","connective_pg_id","dispatch_org_id","running_state"],"name":"设备名称","property_name_eng":"running_state","dispatch_org_id":"调度机构","st_id":"所属厂站","table_name_eng":"SG_DEV_BUSBAR_B_NEW","running_state":"运行状态"},{"group_name":"","data":[{"NAME":"2母线","DISPATCH_ORG_ID_0":"国调","VOLTAGE_TYPE":1001,"ST_ID":"01129901010001","DISPATCH_ORG_ID":"0021990100","RUNNING_STATE":1003,"CONNECTIVE_PG_ID":"0101990101","MODEL":"ZF27-1100(L)","VOLTAGE_TYPE_0":"1000kV","RUNNING_STATE_0":"在运","ID":"130199010100000001","MODEL_0":"ZF27-1100(L)","NAME_0":"2母线","CONNECTIVE_PG_ID_0":"华北","ST_ID_0":"长治站","ID_0":"130199010100000001"},{"NAME":"1母线","DISPATCH_ORG_ID_0":"华北分中心","VOLTAGE_TYPE":1001,"ST_ID":"01129901010008","DISPATCH_ORG_ID":"0021990101","RUNNING_STATE":1003,"CONNECTIVE_PG_ID":"0101990101","MODEL":"ZF27-1100(L)","VOLTAGE_TYPE_0":"1000kV","RUNNING_STATE_0":"在运","ID":"130199010100000014","MODEL_0":"ZF27-1100(L)","NAME_0":"1母线","CONNECTIVE_PG_ID_0":"华北","ST_ID_0":"锡盟","ID_0":"130199010100000014"},{"NAME":"2母线","DISPATCH_ORG_ID_0":"华北分中心","VOLTAGE_TYPE":1001,"ST_ID":"01129901010008","DISPATCH_ORG_ID":"0021990101","RUNNING_STATE":1003,"CONNECTIVE_PG_ID":"0101990101","MODEL":"ZF27-1100(L)","VOLTAGE_TYPE_0":"1000kV","RUNNING_STATE_0":"在运","ID":"130199010100000015","MODEL_0":"ZF27-1100(L)","NAME_0":"2母线","CONNECTIVE_PG_ID_0":"华北","ST_ID_0":"锡盟","ID_0":"130199010100000015"},{"NAME":"1母线","DISPATCH_ORG_ID_0":"国调","VOLTAGE_TYPE":1001,"ST_ID":"01129901000036","DISPATCH_ORG_ID":"0021990100","RUNNING_STATE":1003,"CONNECTIVE_PG_ID":"0101990100","MODEL":"JLHN58K-1600","VOLTAGE_TYPE_0":"1000kV","RUNNING_STATE_0":"在运","ID":"130199010000000237","MODEL_0":"JLHN58K-1600","NAME_0":"1母线","CONNECTIVE_PG_ID_0":"国网","ST_ID_0":"南阳站","ID_0":"130199010000000237"},{"NAME":"2母线","DISPATCH_ORG_ID_0":"国调","VOLTAGE_TYPE":1001,"ST_ID":"01129901000036","DISPATCH_ORG_ID":"0021990100","RUNNING_STATE":1003,"CONNECTIVE_PG_ID":"0101990100","MODEL":"JLHN58K-1600","VOLTAGE_TYPE_0":"1000kV","RUNNING_STATE_0":"在运","ID":"130199010000000238","MODEL_0":"JLHN58K-1600","NAME_0":"2母线","CONNECTIVE_PG_ID_0":"国网","ST_ID_0":"南阳站","ID_0":"130199010000000238"},{"NAME":"1母线","DISPATCH_ORG_ID_0":"国调","VOLTAGE_TYPE":1001,"ST_ID":"01129901000035","DISPATCH_ORG_ID":"0021990100","RUNNING_STATE":1003,"CONNECTIVE_PG_ID":"0101990100","MODEL":"6063G-T6-D250/D230","VOLTAGE_TYPE_0":"1000kV","RUNNING_STATE_0":"在运","ID":"130199010000000245","MODEL_0":"6063G-T6-D250/D230","NAME_0":"1母线","CONNECTIVE_PG_ID_0":"国网","ST_ID_0":"荆门站","ID_0":"130199010000000245"},{"NAME":"2母线","DISPATCH_ORG_ID_0":"国调","VOLTAGE_TYPE":1001,"ST_ID":"01129901000035","DISPATCH_ORG_ID":"0021990100","RUNNING_STATE":1003,"CONNECTIVE_PG_ID":"0101990100","MODEL":"6063G-T6-D250/D230","VOLTAGE_TYPE_0":"1000kV","RUNNING_STATE_0":"在运","ID":"130199010000000246","MODEL_0":"6063G-T6-D250/D230","NAME_0":"2母线","CONNECTIVE_PG_ID_0":"国网","ST_ID_0":"荆门站","ID_0":"130199010000000246"},{"NAME":"1母线","DISPATCH_ORG_ID_0":"国调","VOLTAGE_TYPE":1001,"ST_ID":"01129901000034","DISPATCH_ORG_ID":"0021990100","RUNNING_STATE":1003,"CONNECTIVE_PG_ID":"0101990100","MODEL":"ZF27-1100(L)","VOLTAGE_TYPE_0":"1000kV","RUNNING_STATE_0":"在运","ID":"130199010000000247","MODEL_0":"ZF27-1100(L)","NAME_0":"1母线","CONNECTIVE_PG_ID_0":"国网","ST_ID_0":"长治站","ID_0":"130199010000000247"},{"NAME":"2母线","DISPATCH_ORG_ID_0":"国调","VOLTAGE_TYPE":1001,"ST_ID":"01129901000034","DISPATCH_ORG_ID":"0021990100","RUNNING_STATE":1003,"CONNECTIVE_PG_ID":"0101990100","MODEL":"ZF27-1100(L)","VOLTAGE_TYPE_0":"1000kV","RUNNING_STATE_0":"在运","ID":"130199010000000248","MODEL_0":"ZF27-1100(L)","NAME_0":"2母线","CONNECTIVE_PG_ID_0":"国网","ST_ID_0":"长治站","ID_0":"130199010000000248"},{"NAME":"2母线","DISPATCH_ORG_ID_0":"华北分中心","VOLTAGE_TYPE":1001,"ST_ID":"01121200000005","DISPATCH_ORG_ID":"0021990101","RUNNING_STATE":1003,"CONNECTIVE_PG_ID":"0101120000","MODEL":"MWG5-1100/8000-63","VOLTAGE_TYPE_0":"1000kV","RUNNING_STATE_0":"在运","ID":"130199010100000026","MODEL_0":"MWG5-1100/8000-63","NAME_0":"2母线","CONNECTIVE_PG_ID_0":"天津","ST_ID_0":"海河","ID_0":"130199010100000026"},{"NAME":"1母线","DISPATCH_ORG_ID_0":"华北分中心","VOLTAGE_TYPE":1001,"ST_ID":"01121200000005","DISPATCH_ORG_ID":"0021990101","RUNNING_STATE":1003,"CONNECTIVE_PG_ID":"0101120000","MODEL":"MWG5-1100/8000-63","VOLTAGE_TYPE_0":"1000kV","RUNNING_STATE_0":"在运","ID":"130199010100000025","MODEL_0":"MWG5-1100/8000-63","NAME_0":"1母线","CONNECTIVE_PG_ID_0":"天津","ST_ID_0":"海河","ID_0":"130199010100000025"},{"NAME":"1母线","DISPATCH_ORG_ID_0":"国调","VOLTAGE_TYPE":1001,"ST_ID":"01129901010001","DISPATCH_ORG_ID":"0021990100","RUNNING_STATE":1003,"CONNECTIVE_PG_ID":"0101990101","MODEL":"ZF27-1100(L)","VOLTAGE_TYPE_0":"1000kV","RUNNING_STATE_0":"在运","ID":"130199010100000005","MODEL_0":"ZF27-1100(L)","NAME_0":"1母线","CONNECTIVE_PG_ID_0":"华北","ST_ID_0":"长治站","ID_0":"130199010100000005"},{"NAME":"1母线","DISPATCH_ORG_ID_0":"华北分中心","VOLTAGE_TYPE":1001,"ST_ID":"01129901010007","DISPATCH_ORG_ID":"0021990101","RUNNING_STATE":1003,"CONNECTIVE_PG_ID":"0101990101","MODEL":"GIS","VOLTAGE_TYPE_0":"1000kV","RUNNING_STATE_0":"在运","ID":"130137010000000001","MODEL_0":"GIS","NAME_0":"1母线","CONNECTIVE_PG_ID_0":"华北","ST_ID_0":"泉城","ID_0":"130137010000000001"},{"NAME":"2母线","DISPATCH_ORG_ID_0":"华北分中心","VOLTAGE_TYPE":1001,"ST_ID":"01129901010007","DISPATCH_ORG_ID":"0021990101","RUNNING_STATE":1003,"CONNECTIVE_PG_ID":"0101990101","MODEL":"GIS","VOLTAGE_TYPE_0":"1000kV","RUNNING_STATE_0":"在运","ID":"130137010000000010","MODEL_0":"GIS","NAME_0":"2母线","CONNECTIVE_PG_ID_0":"华北","ST_ID_0":"泉城","ID_0":"130137010000000010"},{"NAME":"1母线","DISPATCH_ORG_ID_0":"华北分中心","VOLTAGE_TYPE":1001,"ST_ID":"01129901010009","DISPATCH_ORG_ID":"0021990101","RUNNING_STATE":1003,"CONNECTIVE_PG_ID":"0101990101","MODEL":"ZF27-1100(L)","VOLTAGE_TYPE_0":"1000kV","RUNNING_STATE_0":"在运","ID":"130113060000000001","MODEL_0":"ZF27-1100(L)","NAME_0":"1母线","CONNECTIVE_PG_ID_0":"华北","ST_ID_0":"保定","ID_0":"130113060000000001"},{"NAME":"2母线","DISPATCH_ORG_ID_0":"华北分中心","VOLTAGE_TYPE":1001,"ST_ID":"01129901010009","DISPATCH_ORG_ID":"0021990101","RUNNING_STATE":1003,"CONNECTIVE_PG_ID":"0101990101","MODEL":"ZF27-1100(L)","VOLTAGE_TYPE_0":"1000kV","RUNNING_STATE_0":"在运","ID":"130113060000000002","MODEL_0":"ZF27-1100(L)","NAME_0":"2母线","CONNECTIVE_PG_ID_0":"华北","ST_ID_0":"保定","ID_0":"130113060000000002"},{"NAME":"II母线","DISPATCH_ORG_ID_0":"华东分中心","VOLTAGE_TYPE":1001,"ST_ID":"01119901020026","DISPATCH_ORG_ID":"0021990102","RUNNING_STATE":1003,"CONNECTIVE_PG_ID":"0101990102","MODEL":"LDRE-φ250/φ230","VOLTAGE_TYPE_0":"1000kV","RUNNING_STATE_0":"在运","ID":"130199010200000196","MODEL_0":"LDRE-φ250/φ230","NAME_0":"II母线","CONNECTIVE_PG_ID_0":"华东","ST_ID_0":"平圩厂","ID_0":"130199010200000196"},{"NAME":"I母线","DISPATCH_ORG_ID_0":"华东分中心","VOLTAGE_TYPE":1001,"ST_ID":"01119901020026","DISPATCH_ORG_ID":"0021990102","RUNNING_STATE":1003,"CONNECTIVE_PG_ID":"0101990102","MODEL":"LDRE-φ250/φ230","VOLTAGE_TYPE_0":"1000kV","RUNNING_STATE_0":"在运","ID":"130199010200000198","MODEL_0":"LDRE-φ250/φ230","NAME_0":"I母线","CONNECTIVE_PG_ID_0":"华东","ST_ID_0":"平圩厂","ID_0":"130199010200000198"},{"NAME":"II母线","DISPATCH_ORG_ID_0":"华东分中心","VOLTAGE_TYPE":1001,"ST_ID":"01129901020021","DISPATCH_ORG_ID":"0021990102","RUNNING_STATE":1003,"CONNECTIVE_PG_ID":"0101990102","MODEL":"ZF15-1100","VOLTAGE_TYPE_0":"1000kV","RUNNING_STATE_0":"在运","ID":"130199010200000258","MODEL_0":"ZF15-1100","NAME_0":"II母线","CONNECTIVE_PG_ID_0":"华东","ST_ID_0":"安吉","ID_0":"130199010200000258"},{"NAME":"I母线","DISPATCH_ORG_ID_0":"华东分中心","VOLTAGE_TYPE":1001,"ST_ID":"01129901020021","DISPATCH_ORG_ID":"0021990102","RUNNING_STATE":1003,"CONNECTIVE_PG_ID":"0101990102","MODEL":"ZF15-1100","VOLTAGE_TYPE_0":"1000kV","RUNNING_STATE_0":"在运","ID":"130199010200000259","MODEL_0":"ZF15-1100","NAME_0":"I母线","CONNECTIVE_PG_ID_0":"华东","ST_ID_0":"安吉","ID_0":"130199010200000259"}]},{"count":8,"property_1":"name","property_0":"id","property_3":"voltage_type","property_2":"st_id","property_5":"dispatch_org_id","property_4":"connective_pg_id","property_7":"running_state","property_6":"model"},{"pageCount":2,"totalCount":38,"pageIndex":1}],"respCode":200,"respDesc":"获取成功"}';
+		//调用表格
+					$("#tableBox").Table({
+						url:'',
+						iframe_url:'',
+						json_str:test_json_str,
+						callback:'',
+						namespace:'',
+						template_th:$("#table_tpl").val(),
+						template_td:$("#table_tpl1").val(),
+						params:'',
+						do_hover:true/*是否鼠标悬浮变换背景颜色效果*/,
+						do_click:true/*是否可以点击行*/
+					});
+	</script>
+	</body>
+</html>

@@ -1,0 +1,206 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Hello, World</title>
+		<link href="fontAweSome/font-awesome.min.css" rel="stylesheet"/>
+		<style type="text/css">
+		.search_pick{
+			width:300px;
+			box-sizing:border-box;
+			border:1px solid #dddddd;
+		}
+
+		.jigou{
+			padding: 10px;
+			min-height:300px;
+			position:relative
+		}
+
+		.tree_box ul li ul{
+			display:none;
+		}
+
+		.tree ul li a:hover,.tree ul li a.active{
+			color:#ff0000;
+		}
+
+		.search_pick_box{
+			width:85px;
+			height:30px;
+			display:inline-block;
+			*display:inline;
+			border-radius:15px;
+			border:1px solid #ccc;
+			line-height: 30px;
+			position: relative;
+			background-color: #ffffff;
+		}
+
+		.search_pick_box .search_pick_text{
+			bottom: 0;
+		    color: #bbb;
+		    font-size: 16px;
+		    left: 10px;
+		    margin-top: 1px;
+		    overflow: hidden;
+		    position: absolute;
+		    right: 10px;
+		    text-align: initial;
+		    text-overflow: ellipsis;
+		    top: 0;
+		    vertical-align: middle;
+		    visibility: inherit;
+		    white-space: nowrap;
+		    text-align:center
+		}
+
+		.search_pick .search_pick_radio{
+			float:right;
+		    padding: 9px 0 0 0;
+		    box-sizing: border-box;
+		}
+
+		.search_pick .search_pick_radio label{
+			font-size: 12px;
+		}
+
+		.search_pick_box .search_pick_input{
+			bottom: 0;
+		    box-sizing: border-box;
+		    left: 0;   
+		    margin: 0;
+		    opacity: 0;
+		    filter:alpha(opactiy=0);
+		    padding: 0 0 0 10px!important;
+		    position: absolute;
+		    top: 0;
+		    width: 100%;
+		    height:30px!important;
+		    background-color: transparent!important;
+		    border: 0!important;
+		    outline: none;
+		    box-shadow: none!important;
+		}
+
+		.search_pick_box .search_pick_input.active{
+			opacity: 0.8;
+			filter:alpha(opactiy=80)
+		}
+
+		.search_pick .tree ul li ul{
+			padding-left: 20px
+		}
+		.search_pick_box .search_close{
+			float:right;
+			width:20px;
+			height:20px;
+			border-radius:50%;
+			color:#ffffff;
+			background-color:#cccccc;
+			display: none;
+			line-height: 18px;
+		    position: absolute;
+		    right: 5px;
+		    top: 5px;
+		    text-align: center;
+		    cursor:default;
+		}
+
+		.search_pick_box .search_close:hover{
+			background-color:#999999;
+		}
+
+		.search_pick_name{
+			display:inline-block;
+			*display:inline;
+			line-height:30px;
+			vertical-align: top
+		}
+
+		.loading{
+			position:absolute;
+			width:100%;
+			height:100%;
+			top:0;
+			left:0;
+			line-height:50px;
+			text-align:center;
+			z-index:1;
+			background-color:#ffffff;
+			opacity:0.8;
+			filter:alpha(opacity=80);
+		}
+
+		.search_result{
+			width:100%;
+			min-height:50px;
+			padding:5px;
+			box-sizing:border-box;
+			z-index:2;
+			position: absolute;
+			top:50px;
+			left:0;
+			display: none;
+			border-top:1px solid #999999;
+		}
+		
+		.search_result ul li a:after{
+			content:'x';
+			float:right;
+			width:10px;
+			height:10px;
+			color:#ff0000
+		}
+		</style>
+	</head>
+	<body>
+	<div class="search_pick jigou">
+		<div class="loading">正在加载...</div>
+		<div class="search_pick_box">
+			<div class="search_pick_text">搜索机构</div>
+			<input class="search_pick_input" type="text" value="" />
+			<a href="javascript:;" class="search_close" title="清除/关闭"><i class="fa fa-times fa-mg"></i></a>
+		</div>
+		<div class="search_result">
+			<label>搜索记录：</label>
+			<ul></ul>
+		</div>
+		<!-- 左边一级树搜索记录end -->
+		<div class="search_pick_radio">
+			<input type="radio" name="range" id="all" checked/><label for="all">所有</label>
+			<input type="radio" name="range" id="directly"/><label for="directly">直属</label>
+		</div>
+		<!-- 左边一级树主体start -->
+		<div class="tree tree_box">
+			<ul></ul>
+		</div>
+		<!-- 左边一级树主体end -->
+	</div>
+	<textarea id="tree_tpl" style="display:none">
+	<li>
+		<a href="javascript:;" data-id="%id%">
+			<i class="fa fa-plus fa-mg"></i>
+			<i class="fa fa-square-o fa-mg"></i>
+			<span>%name%</span>
+		</a>
+	</li>
+	</textarea>
+	<script type="text/javascript" src="jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="left_tree.js"></script>
+	<script>
+		var test_json_str='{"data":{"org":[{"childMenuList":[{"childMenuList":[{"childMenuList":[{"id":"0021110101","name":"城区区调","parentId":"0021110000"},{"id":"0021110105","name":"朝阳区调","parentId":"0021110000"},{"id":"0021110106","name":"丰台区调","parentId":"0021110000"},{"id":"0021110107","name":"石景山区调","parentId":"0021110000"},{"id":"0021110108","name":"海淀区调","parentId":"0021110000"},{"id":"0021110109","name":"门头沟区调","parentId":"0021110000"},{"id":"0021110111","name":"房山区调","parentId":"0021110000"},{"id":"0021110112","name":"通州区调","parentId":"0021110000"},{"id":"0021110113","name":"顺义区调","parentId":"0021110000"},{"id":"0021110114","name":"昌平区调","parentId":"0021110000"},{"id":"0021110115","name":"大兴区调","parentId":"0021110000"},{"id":"0021110116","name":"怀柔区调","parentId":"0021110000"},{"id":"0021110117","name":"平谷区调","parentId":"0021110000"},{"id":"0021110228","name":"密云县调","parentId":"0021110000"},{"id":"0021110229","name":"延庆县调","parentId":"0021110000"}],"id":"0021110000","name":"北京市调","parentId":"0021990101"},{"childMenuList":[{"id":"0021120101","name":"城南地调","parentId":"0021120000"},{"id":"0021120102","name":"城东地调","parentId":"0021120000"},{"id":"0021120103","name":"城西地调","parentId":"0021120000"},{"id":"0021120105","name":"河北区调","parentId":"0021120000"},{"id":"0021120106","name":"红桥区调","parentId":"0021120000"},{"id":"0021120110","name":"东丽地调","parentId":"0021120000"},{"id":"0021120114","name":"武清地调","parentId":"0021120000"},{"id":"0021120115","name":"宝坻地调","parentId":"0021120000"},{"id":"0021120116","name":"滨海地调","parentId":"0021120000"},{"id":"0021120221","name":"宁河地调","parentId":"0021120000"},{"id":"0021120223","name":"静海地调","parentId":"0021120000"},{"id":"0021120225","name":"蓟县地调","parentId":"0021120000"}],"id":"0021120000","name":"天津市调","parentId":"0021990101"}],"id":"0021990101","name":"华北分中心","parentId":"0021990100"}],"id":"0021990100","name":"国调","parentId":"0021990100"}]},"respCode":200,"respDesc":"获取成功"}';
+		//调用树
+		$(".tree_box").Tree({ 
+			url:"",
+			click_url:"",
+			table_url:"",
+			json_str:test_json_str,
+			condition_url:"",
+			template:$("#tree_tpl").val(),
+			namespace:"",
+			type:"org"
+		});
+	</script>
+	</body>
+</html>
